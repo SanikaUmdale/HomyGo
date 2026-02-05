@@ -52,11 +52,28 @@ module.exports.validateReview = (req, res, next) => {
   }
 };
 
+// module.exports.isReviewAuthor = async (req, res, next) => {
+//   let { id, reviewid } = req.params;
+//   let review = await Review.findById(reviewid);
+//   if (!review.author.equals(res.locals.currUser._id)) {
+//     req.flash("error", "You are not author of this review.! ");
+//     return res.redirect(`/listings/${id}`);
+//   }
+//   next();
+// };
+
 module.exports.isReviewAuthor = async (req, res, next) => {
-  let { id, reviewid } = req.params;
-  let review = await Review.findById(reviewid);
-  if (!review.author.equals(res.locals.currUser._id)) {
-    req.flash("error", "You are not author of this review.! ");
+  const { id, reviewId } = req.params; // match your route param names exactly
+  const review = await Review.findById(reviewId);
+
+  if (!review) {
+    req.flash("error", "Review not found!");
+    return res.redirect(`/listings/${id}`);
+  }
+
+  // Use req.user for logged-in user check
+  if (!review.author.equals(req.user._id)) {
+    req.flash("error", "You are not author of this review!");
     return res.redirect(`/listings/${id}`);
   }
   next();

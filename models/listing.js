@@ -1,24 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
+const { required } = require("joi");
 
 const listingSchema = new Schema({
   title: { type: String, required: true },
   description: String,
   image: {
-    url: {
-      type: String,
-      default:
-        "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60",
-      set: (v) =>
-        v.trim() === ""
-          ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60"
-          : v,
-    },
-    filename: {
-      type: String,
-      default: "",
-    },
+    url: String,
+    filename: String,
   },
 
   price: Number,
@@ -34,6 +24,32 @@ const listingSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
+  },
+  geometry: {
+    type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ["Point"], // 'location.type' must be 'Point'
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
+ category: {
+    type: String,
+    required: true, // you can make this optional if needed
+    enum: [
+      'Trending',
+      'Rooms',
+      'Iconic Cities',
+      'Mountains',
+      'Castles',
+      'Amazing Pools',
+      'Camping',
+      'Farms',
+      'Arctic'
+    ]
   },
 });
 

@@ -1,15 +1,14 @@
-body{
-   font-family: "Plus Jakarta Sans", sans-serif !important;
-   display: flex;
-   flex-direction: column;
-   min-height: 100vh;
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.container{
+.container {
   flex: 1;
 }
 
-    
 /* .plus-jakarta-sans-<uniquifier> {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-optical-sizing: auto;
@@ -58,58 +57,62 @@ body{
 
 /* Crada */
 .listing-card {
-  border:none !important;
+  border: none !important;
   margin-bottom: 2rem;
 }
-.card-img-top{
+.card-img-top {
   border-radius: 1rem !important;
   width: 100% !important;
   object-fit: cover !important;
 }
- .card-body{
+.card-body {
   padding: 0 !important;
-  
- }
- .card-text p{
- font-weight: 400 !important;
- }
- .listing_link{
+}
+.card-text p {
+  font-weight: 400 !important;
+}
+.listing_link {
   text-decoration: none !important;
- }
- /* card effect */
-  .card-img-overlay{
-    opacity: 0;
-  }
-  .card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: white;
-  }
+}
+/* card effect */
+.card-img-overlay {
+  opacity: 0;
+}
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: white;
+}
 
-  /* New page */
-  .add-btn{
-    background-color: #2973c2 !important;
-    border: none !important;
-  }
+/* New page */
+.add-btn {
+  background-color: #2973c2 !important;
+  border: none !important;
+}
 
-  /* editpage */
+/* editpage */
 
-  .edit-btn{
-     background-color: #2973c2 !important;
-    border: none !important;
-  }
+.edit-btn {
+  background-color: #2973c2 !important;
+  border: none !important;
+}
 
-
-  /* shoepage */
-  .show-img{
-    height: 30vh;
-  }
- .btns{
+/* shoepage */
+.show-img {
+  height: 30vh;
+}
+.btns {
   display: flex;
- }
- .delete-btn{
+}
+.delete-btn {
   background-color: rgb(205, 57, 57) !important;
- }
- .show-card{
+}
+.show-card {
   padding-left: 0;
   padding-right: 0;
- }
+}
+
+/* MAP */
+#map {
+  height: 350px;
+  width: 110vh;
+}

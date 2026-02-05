@@ -1,34 +1,78 @@
-<% layout("layouts/boilerplate")-%>
+<% layout("layouts/boilerplate") -%>
 
-  <h3>All listings</h3>
-  <!-- <form method="GET" action="/listings/new">
-    <button>Create New Listing</button>
-  </form> -->
-  <div class="row row-clos-lg-3 row-cols-md-3 row-cols-sm-1">
-    <% for(let listing of allListings){ %>
-    <a href="/listings/<%= listing._id%>" class="listing_link">
-      <div class="card col listing-card" style="width: 20rem">
+<style>
+  /* keep your existing styles or paste your styles from before */
+  #filters { display:flex; flex-wrap:wrap; align-items:center; }
+  .filter { text-align:center; margin-right:2rem; margin-top:2rem; opacity:0.7; }
+  .filter:hover { opacity:1; cursor:pointer; }
+  .filter p{ font-size:0.8rem; }
+  .tax-info{ display:none; }
+  .tax-togale{ border:1px solid black; border-radius:1rem; height:3.2rem; padding:0.8rem; display:flex; align-items:center; }
+</style>
+
+<div id="filters">
+  <!-- your filter icons (unchanged) -->
+  <div class="filter"><div><i class="fa-solid fa-fire"></i></div><p>Trending</p></div>
+  <div class="filter"><div><i class="fa-solid fa-bed"></i></div><p>Rooms</p></div>
+  <div class="filter"><div><i class="fa-solid fa-mountain-city"></i></div><p>Iconic Cities</p></div>
+  <div class="filter"><div><i class="fa-solid fa-mountain"></i></div><p>Mountains</p></div>
+  <div class="filter"><div><i class="fa-brands fa-fort-awesome"></i></div><p>Castles</p></div>
+  <div class="filter"><div><i class="fa-solid fa-person-swimming"></i></div><p>Amazing Pools</p></div>
+  <div class="filter"><div><i class="fa-solid fa-umbrella-beach"></i></div><p>Beach</p></div>
+  <div class="filter"><div><i class="fa-solid fa-house-flood-water"></i></div><p>LakeFront</p></div>
+  <div class="filter"><div><i class="fa-solid fa-house-chimney-window"></i></div><p>TinyHomes</p></div>
+
+  <div class="tax-togale">
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+    </div>
+  </div>
+</div>
+
+<!-- LISTINGS GRID -->
+<div class="row row-clos-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
+
+  <% for (let listing of listings) { %>
+    <a href="/listings/<%= listing._id %>" class="listing_link">
+      <div class="card col listing-card" style="width: 20rem; margin-bottom:1.5rem;">
         <img
-          src="<%= listing.image.url  %>"
+         src="<%= (listing && listing.image) 
+         ? (typeof listing.image === 'string' ? listing.image : listing.image.url || '/images/default.jpg')
+         : '/images/default.jpg' %>"
+
           class="card-img-top"
-          alt="listing_image"
-          style="height: 20rem"
+          alt="listing image"
+          style="height: 20rem; object-fit: cover;"
         />
+
         <div class="card-img-overlay"></div>
+
         <div class="card-body">
           <p class="card-text">
-            <b> <%= listing.title %> <br /></b>
-            &#8377;<%= listing.price.toLocaleString("en-IN")%>/night
+            <b><%= listing.title || 'Untitled' %></b> <br />
+            ₹
+            <%= (typeof listing.price === 'number' || (!isNaN(Number(listing.price)) && listing.price !== undefined))
+                ? Number(listing.price).toLocaleString("en-IN")
+                : '—' %>
+            /night
+            <i class="tax-info"> +18% GST</i>
           </p>
         </div>
       </div>
     </a>
-    <%}%>
-  </div>
+  <% } %>
 
-  <!-- <ul>
-    <% for(let listing of allListings){ %>
-    <li><a href="/listings/<%= listing.id%>"><%= listing.title%> </a></li>
-    <%}%>
-  </ul> -->
+</div>
 
+<script>
+  const taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  if (taxSwitch) {
+    taxSwitch.addEventListener("click", () => {
+      const taxInfo = document.getElementsByClassName("tax-info");
+      for (let info of taxInfo) {
+        info.style.display = info.style.display !== "inline" ? "inline" : "none";
+      }
+    });
+  }
+</script>

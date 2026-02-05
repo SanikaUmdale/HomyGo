@@ -1,84 +1,64 @@
-<% layout("/layouts/boilerplate")%>
+<% layout("layouts/boilerplate") -%>
+<% var listing = (typeof listing !== 'undefined') ? listing : {}; %>
+
 <div class="row mt-3">
   <div class="col-8 offset-2">
-    <br /><br />
     <h3>Create a new Listing</h3>
-    <form method="POST" action="/listings" novalidate class="needs-validation">
+    <!-- NOTE: enctype="multipart/form-data" required for file upload -->
+    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input
-          id="title"
-          type="text"
-          name="listing[title]"
-          placeholder="Add a catchy title"
-          class="form-control"
-          required
-        />
+        <input id="title" type="text" name="listing[title]" placeholder="Add a catchy title" class="form-control" required value="<%= listing.title || '' %>"/>
         <div class="valid-feedback">Title looks good</div>
       </div>
 
       <div class="mb-3">
-        <label for="description">Description</label
-        ><textarea
-          id="description"
-          type="text"
-          name="listing[description]"
-          placeholder="enter description"
-          class="form-control"
-          required
-        ></textarea>
-        <div class="invalid-feedback">Please enter a short decsription</div>
+        <label for="description">Description</label>
+        <textarea id="description" name="listing[description]" placeholder="enter description" class="form-control" required><%= listing.description || '' %></textarea>
+        <div class="invalid-feedback">Please enter a short description</div>
       </div>
 
       <div class="mb-3">
-        <label for="image" class="form-label">Image Link</label
-        ><input
-          id="image"
-          type="text"
-          name="listing[image][url]"
-          placeholder="enter image URL/Link"
-          class="form-control"
-        />
+        <label for="image" class="form-label"> Upload Listing Image</label>
+        <!-- your route expects req.file because name is "image" -->
+        <input id="image" type="file" name="image" class="form-control" required />
       </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" name="listing[category]" class="form-select" required>
+          <option value="" disabled <%= !listing.category ? 'selected' : '' %>>Select a category</option>
+          <option value="Trending" <%= listing.category === "Trending" ? "selected" : "" %>>Trending</option>
+          <option value="Rooms" <%= listing.category === "Rooms" ? "selected" : "" %>>Rooms</option>
+          <option value="Iconic Cities" <%= listing.category === "Iconic Cities" ? "selected" : "" %>>Iconic Cities</option>
+          <option value="Mountains" <%= listing.category === "Mountains" ? "selected" : "" %>>Mountains</option>
+          <option value="Castles" <%= listing.category === "Castles" ? "selected" : "" %>>Castles</option>
+          <option value="Amazing Pools" <%= listing.category === "Amazing Pools" ? "selected" : "" %>>Amazing Pools</option>
+          <option value="Camping" <%= listing.category === "Camping" ? "selected" : "" %>>Camping</option>
+          <option value="Farms" <%= listing.category === "Farms" ? "selected" : "" %>>Farms</option>
+          <option value="Arctic" <%= listing.category === "Arctic" ? "selected" : "" %>>Arctic</option>
+        </select>
+        <div class="invalid-feedback">Please select a category</div>
+      </div>
+
       <div class="row">
         <div class="mb-3 col-md-4">
-          <label for="price" class="form-label">Price</label
-          ><input
-            id="price"
-            type="number"
-            name="listing[price]"
-            placeholder="1200"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">Plaese enter valid amount</div>
+          <label for="price" class="form-label">Price</label>
+          <input id="price" type="number" name="listing[price]" placeholder="1200" class="form-control" required value="<%= listing.price || '' %>"/>
+          <div class="invalid-feedback">Please enter a valid amount</div>
         </div>
 
         <div class="mb-3 col-md-8">
-          <label for="location" class="form-label">Location</label
-          ><input
-            id="location"
-            type="text"
-            name="listing[location]"
-            placeholder="Solapur  Maharashtra"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">Plaese enter valid Location</div>
+          <label for="location" class="form-label">Location</label>
+          <input id="location" type="text" name="listing[location]" placeholder="Solapur, Maharashtra" class="form-control" required value="<%= listing.location || '' %>"/>
+          <div class="invalid-feedback">Please enter a valid location</div>
         </div>
       </div>
 
       <div class="mb-3">
-        <label for="country" class="form-label">Country</label
-        ><input
-          id="country"
-          type="text"
-          name="listing[country]"
-          placeholder="India"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">Country should name be valid</div>
+        <label for="country" class="form-label">Country</label>
+        <input id="country" type="text" name="listing[country]" placeholder="India" class="form-control" required value="<%= listing.country || '' %>"/>
+        <div class="invalid-feedback">Country name should be valid</div>
       </div>
 
       <button class="btn btn-dark add-btn">Add</button>
