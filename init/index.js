@@ -29,17 +29,17 @@ const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 
-main()
-  .then(() => {
-    console.log("connected to DB");
-  })
-  .catch((err) => {
-    console.error("DB connection error:", err);
-  });
+// main()
+//   .then(() => {
+//     console.log("connected to DB");
+//   })
+//   .catch((err) => {
+//     console.error("DB connection error:", err);
+//   });
 
-async function main() {
-  await mongoose.connect(process.env.ATLASDB_URL);
-}
+// async function main() {
+//   await mongoose.connect(process.env.ATLASDB_URL);
+// }
 
 const initDB = async () => {
   await Listing.deleteMany({});
