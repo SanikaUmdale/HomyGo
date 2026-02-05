@@ -1,6 +1,4 @@
 // app.js (cleaned)
-const session = require("express-session");
-const MongoStore = require("connect-mongo").default;
 
 
 const dns = require("dns");
@@ -21,6 +19,9 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 // const session = require("express-session");
 // const MongoStore = require("connect-mongo");
+const session = require("express-session");
+const MongoStore = require("connect-mongo").default;
+
 
 const flash = require("connect-flash");
 const passport = require("passport");
