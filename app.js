@@ -31,6 +31,14 @@ const multer = require("multer");
 
 // DB connection
 const dbUrl = process.env.ATLASDB_URL;
+
+
+console.log("DB URL =", dbUrl); // TEMP DEBUG
+
+if (!dbUrl) {
+  throw new Error("❌ ATLASDB_URL is NOT available in production");
+}
+
 async function main() {
   await mongoose.connect(dbUrl);
 }
@@ -83,7 +91,7 @@ const store=MongoStore.create({
 console.log("MongoStore =", MongoStore);
 console.log("MongoStore.create =", MongoStore.create);
 
-store.on("error",()=>{
+store.on("error",(err)=>{
   console.log("ERROR in MANGO SESSION STORE",err);
 });
 

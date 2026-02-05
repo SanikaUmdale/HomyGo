@@ -1,3 +1,30 @@
+// const mongoose = require("mongoose");
+// const initData = require("./data.js");
+// const Listing = require("../models/listing.js");
+
+// main()
+//   .then(() => {
+//     console.log("connected to DB");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+// async function main() {
+//   await mongoose.connect(process.env.ATLASDB_URL);
+// }
+// const initDB = async () => {
+//   await Listing.deleteMany({});
+//   initData.data = initData.data.map((obj) => ({
+//     ...obj,
+//     owner: "6894e30dc2eec25fac1ccd67",
+//   }));
+//   await Listing.insertMany(initData.data);
+//   console.log("data was intiaslised");
+// };
+// initDB();
+
+
+
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
@@ -7,11 +34,13 @@ main()
     console.log("connected to DB");
   })
   .catch((err) => {
-    console.log(err);
+    console.error("DB connection error:", err);
   });
+
 async function main() {
   await mongoose.connect(process.env.ATLASDB_URL);
 }
+
 const initDB = async () => {
   await Listing.deleteMany({});
   initData.data = initData.data.map((obj) => ({
@@ -19,6 +48,7 @@ const initDB = async () => {
     owner: "6894e30dc2eec25fac1ccd67",
   }));
   await Listing.insertMany(initData.data);
-  console.log("data was intiaslised");
+  console.log("data was initialised");
 };
+
 initDB();
