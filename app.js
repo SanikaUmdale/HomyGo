@@ -1,6 +1,5 @@
 // app.js (cleaned)
 
-
 const dns = require("dns");
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -22,7 +21,6 @@ const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 
-
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -32,7 +30,6 @@ const multer = require("multer");
 
 // DB connection
 const dbUrl = process.env.ATLASDB_URL;
-
 
 console.log("DB URL =", dbUrl); // TEMP DEBUG
 
@@ -77,13 +74,12 @@ function flattenListingBody(req, res, next) {
   next();
 }
 
-
-const store=MongoStore.create({
-  mongoUrl:dbUrl,
-  crypto:{
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
     secret: process.env.SECRET,
   },
-  touchAfter:24*3600,
+  touchAfter: 24 * 3600,
 });
 // const store = MongoStore.create({
 //   mongoUrl: dbUrl,
@@ -92,8 +88,8 @@ const store=MongoStore.create({
 console.log("MongoStore =", MongoStore);
 console.log("MongoStore.create =", MongoStore.create);
 
-store.on("error",(err)=>{
-  console.log("ERROR in MANGO SESSION STORE",err);
+store.on("error", (err) => {
+  console.log("ERROR in MANGO SESSION STORE", err);
 });
 
 // Session + flash + passport
@@ -108,8 +104,6 @@ const sessionOptions = {
     httpOnly: true,
   },
 };
-
-
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -157,6 +151,8 @@ app.locals.upload = upload;
 app.locals.flattenListingBody = flattenListingBody;
 
 // Start server
-app.listen(8080, () => {
-  console.log("server is listening to port 8080");
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`server is listening on port ${PORT}`);
 });
